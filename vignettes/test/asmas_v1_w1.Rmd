@@ -1,0 +1,60 @@
+---
+title: "Untitled"
+author: "Peter von Rohr"
+date: "23 February 2016"
+output: 
+  beamer_presentation:
+    fig_crop: no
+    fig_height: 6
+    fig_width: 10
+    includes:
+      in_header: tex/ethslidesheader.tex
+    keep_tex: yes
+documentclass: ETHbeamerclass
+classoption: first,ETH3,navigation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## R  Markdown
+
+This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+## Slide with Bullets
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+## Slide with R Output
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with pairs plot
+
+
+```{r TestGenericScaledPlot, results='asis', fig.show=TRUE}
+rcoursetools::genericScaledPlot(pData = cars, pnPaperWidthScale = 0.9, pfPlotMethod = pairs)
+```
+
+## Plot with main title
+
+```{r pressure, results='asis', fig.show=TRUE}
+rcoursetools::genericScaledPlot(pData = pressure, pnPaperWidthScale = 0.75, pfPlotMethod = plot, main = "Pressure Data")
+```
+
+## Plot and fit
+
+```{r PlotAndFitCars, results='asis'}
+rcoursetools::genericScaledPlot(pnPaperWidthScale = 0.9)
+plot(cars)
+lines(lowess(cars))
+```
+

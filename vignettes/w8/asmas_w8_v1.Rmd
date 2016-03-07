@@ -1,0 +1,136 @@
+---
+title: "Angewandte Statistische Methoden in den Nutztierwissenschaften"
+author: "Peter von Rohr"
+date: "23 February 2016"
+output: 
+  beamer_presentation:
+    fig_crop: no
+    fig_height: 6
+    fig_width: 10
+    includes:
+      in_header: tex/ethslidesheader.tex
+    keep_tex: yes
+documentclass: ETHbeamerclass
+classoption: first,ETH3,navigation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, results = 'asis')
+```
+
+
+## Administration
+
+- Veranstaltung: 2 V im Vorlesungsverzeichnis
+- Plan: 2 V $\rightarrow$ 1 U + 1 V
+- Übungen: Beispiele in R
+- Unterlagen: Folien, Übungen, Lösungen
+- Prüfung: schriftlich, Termin: 30.5.2016, Dauer: 1 Stunde
+- Prüfungsstoff: Lösungen der Übungen, Folien
+
+
+## Lernziele
+
+Die Studierenden ...
+
+- kennen die Eigenschaften der multiplen linearen Regression und 
+- können einfache Datensätze mithilfe der Regressionsmethode analysieren
+- wissen wieso multiple linear Regressionen bei der genomischen Selektion nicht brauchbar ist
+- kennen die in der genomischen Selektion verwendeten statistischen Verfahren, wie 
+    - BLUP-basierte Verfahren, 
+    - Bayes'sche Verfahren und 
+    - die LASSO Methode 
+- können einfach Übungsbeispiele mit der Statistiksoftware R erfolgreich bearbeiten.
+
+
+## Programm
+```{r SlidesTable, echo=FALSE, results='asis'}
+#' add subject to given vector based on date
+addSubjectOnDate <- function(psSubject, pdSubjDate, pvSubject, pvDate){
+  vSubjectResult <- pvSubject
+  nSubIdx <- which(pvDate == pdSubjDate)
+  vSubjectResult[nSubIdx] <- psSubject
+  return(vSubjectResult)
+}
+
+# define course start date
+dCourseStart <- as.Date("2016/04/11")
+# set number of weeks in semester
+nNrSemesterWeeksTotal <- 15
+# define columns for weaks, dates, and subjects
+nNrSemsterStartWeek <- 8
+nNrSemesterWeeks <- nNrSemesterWeeksTotal - nNrSemsterStartWeek + 1
+
+Woche <- nNrSemsterStartWeek:nNrSemesterWeeksTotal
+Datum <- format(seq(dCourseStart, by = "week", length.out = nNrSemesterWeeks), "%d.%m")
+Thema <- vector(mode = "character", length = nNrSemesterWeeks)
+# set subject for special dates
+# pentecote
+sDatePentMon <- format(as.Date("2016/05/16"), "%d.%m")
+nSubjPentMondIdx <- which(Datum == sDatePentMon)
+Thema[nSubjPentMondIdx] <- "Pfingstmontag (frei)"
+# assign subjects
+Thema <- addSubjectOnDate(psSubject  = "Einführung, Statistik in der Genomik", 
+                          pdSubjDate = format(as.Date("2016/04/11"), "%d.%m"), 
+                          pvSubject  = Thema, 
+                          pvDate = Datum)
+Thema <- addSubjectOnDate(psSubject  = "Problem der multiplen lineare Regression", 
+                          pdSubjDate = format(as.Date("2016/04/18"), "%d.%m"), 
+                          pvSubject  = Thema, 
+                          pvDate = Datum)
+Thema <- addSubjectOnDate(psSubject  = "Alternative Ansätze - LASSO", 
+                          pdSubjDate = format(as.Date("2016/04/25"), "%d.%m"), 
+                          pvSubject  = Thema, 
+                          pvDate = Datum)
+Thema <- addSubjectOnDate(psSubject  = "BLUP", 
+                          pdSubjDate = format(as.Date("2016/05/02"), "%d.%m"), 
+                          pvSubject  = Thema, 
+                          pvDate = Datum)
+Thema <- addSubjectOnDate(psSubject  = "Einführung in Bayes'sche Statistik", 
+                          pdSubjDate = format(as.Date("2016/05/09"), "%d.%m"), 
+                          pvSubject  = Thema, 
+                          pvDate = Datum)
+Thema <- addSubjectOnDate(psSubject  = "Bayes'sche Verfahren in der Genomik", 
+                          pdSubjDate = format(as.Date("2016/05/23"), "%d.%m"), 
+                          pvSubject  = Thema, 
+                          pvDate = Datum)
+
+                          
+# exam
+Thema[length(Thema)] <- "Prüfung"
+dfSlideTable <- data.frame(Woche, Datum, Thema, stringsAsFactors = FALSE)
+knitr::kable(dfSlideTable)
+```
+
+
+## Thema 
+
+- Mit __Genomischer Selektion__ (GS) kam Paradigmentwechsel in der Tierzucht
+- Bedeutung dieser Veränderung mit Fokus auf die verwendeten statistische Methoden
+- Grundstein für GS war das Paper 
+
+"Meuwissen THE, Hayes BJ, Goddard ME (2001) Prediction of total genetic value using
+genome-wide dense marker maps. Genetics 157:1819–1829" 
+
+## Vor Einführung von GS
+
+- Informationsquellen für Zuchtwertschätzung
+  - phänotypische Leistungen
+  - verwandtschaftliche Beziehungen / Abstammungen / Pedigree
+  - ab ca 1990 einzelne genetische Marker
+  
+## Informationsfluss in einem Zuchtprogramm
+
+```{r InformationsflussZuchtprogramm}
+rcoursetools::
+```
+
+## Mit GS
+
+- Genomische Selektion ist Methode der Wahl in modernen Zuchtprogrammen
+- __Theorie__: Genomische Zuchtwerte basieren nicht mehr auf dem BLUP-Tiermodell mit einem "infinitesimal model" für die Genwirkung sondern auf einem Modell einer endlichen Anzahl Genorten mit hauptsächlich additiver Wirkung. 
+- Statistische Modelle in genomischer Zuchtwertschätzung haben mehr Parameter ($p$) als Beobachtungen ($n$) 
+- Konsequenz: least squares funktioniert nicht zur Parameterschätzung in den verwendeten Regressionsmodellen 
+- Frage: welche Methoden stehen zur Auswahl
+
+
