@@ -144,8 +144,20 @@ rcoursetools::insertOdgAsPdf(psOdgFileStem = "AnimalModelVsGenomicSelection", pn
 
 $$\mathbf{y} = \mathbf{X} \mathbf{b} + \mathbf{Z} \mathbf{u} + \mathbf{e}$$
 
-wobei: $\mathbf{y}$: Vektor mit phänotypischen Beobachtungen, $\mathbf{b}$: Vektor mit fixen Effekten, $\mathbf{X}$: Inzidenzmatrix, welche fixe Effekte den Beobachtungen zuordnet, $\mathbf{u}$: Vektor von Zuchtwerten
+wobei: 
+\begin{tabular}{ll}
+$\mathbf{y}$: & Vektor mit phänotypischen Beobachtungen\\
+$\mathbf{b}$: & Vektor mit fixen Effekten              \\
+$\mathbf{X}$: & Inzidenzmatrix, welche fixe Effekte den Beobachtungen zuordnet \\
+$\mathbf{u}$: & Vektor mit Zuchtwerten (zufällig) \\
+$\mathbf{Z}$: & Inzidenzmatrix der Zuchtwerte \\
+$\mathbf{e}$: & Vektor mit Residuen (zufällig)
+\end{tabular}
 
+* Varianzen: $Var(\mathbf{e}) = \mathbf{R} = \mathbf{I}*\sigma_e^2$, 
+$Var(\mathbf{u}) = \mathbf{G} = \mathbf{A} * \sigma_g^2$,
+$Cov(\mathbf{u}, \mathbf{e}^T) = Cov(\mathbf{e}, \mathbf{u}^T) = \mathbf{0}$, 
+$Var(\mathbf{y}) = \mathbf{V} = \mathbf{ZGZ}^T + \mathbf{R}$
 
 ## Mit GS
 
