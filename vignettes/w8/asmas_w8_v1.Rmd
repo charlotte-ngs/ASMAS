@@ -6,7 +6,6 @@ output:
   beamer_presentation:
     fig_crop: no
     fig_height: 6
-    fig_width: 10
     includes:
       in_header: tex/ethslidesheader.tex
     keep_tex: yes
@@ -112,18 +111,41 @@ knitr::kable(dfSlideTable)
 "Meuwissen THE, Hayes BJ, Goddard ME (2001) Prediction of total genetic value using
 genome-wide dense marker maps. Genetics 157:1819–1829" 
 
-## Vor Einführung von GS
-
-- Informationsquellen für Zuchtwertschätzung
-  - phänotypische Leistungen
-  - verwandtschaftliche Beziehungen / Abstammungen / Pedigree
-  - ab ca 1990 einzelne genetische Marker
-  
 ## Informationsfluss in einem Zuchtprogramm
 
 ```{r InformationsflussZuchtprogramm}
-rcoursetools::
+rcoursetools::insertOdgAsPdf(psOdgFileStem = "ZuchtprogrammKomplett", pnPaperWidthScale = 0.8)
 ```
+
+## Genomische Selektion
+
+```{r AnimalModelVsGenomicSelection}
+rcoursetools::insertOdgAsPdf(psOdgFileStem = "AnimalModelVsGenomicSelection", pnPaperWidthScale = 0.8)
+```
+
+
+## Vor Einführung von GS
+
+* Informationsquellen für Zuchtwertschätzung
+   + phänotypische Leistungen
+   + verwandtschaftliche Beziehungen / Abstammungen / Pedigree
+   + Varianzkomponenten aus periodischen Schätzungen
+   + BLUP Tiermodell zur Schätzung der Zuchtwerte
+   + ab ca 1990 einzelne genetische Marker als fixe oder zufällige Effekte ins Tiermodell integriert 
+   + Problem: einzelne Marker werden sehr schnell fixiert
+* Konsequenzen der Fixation für das Zuchtziel unbekannt?
+* Uneinigkeit, welches die beste Strategie sein könnte
+* Durch technologischen Fortschritt wurde Problem hinfällig
+
+
+## Modellierung vor GS
+
+* BLUP Tiermodell
+
+$$\mathbf{y} = \mathbf{X} \mathbf{b} + \mathbf{Z} \mathbf{u} + \mathbf{e}$$
+
+wobei: $\mathbf{y}$: Vektor mit phänotypischen Beobachtungen, $\mathbf{b}$: Vektor mit fixen Effekten, $\mathbf{X}$: Inzidenzmatrix, welche fixe Effekte den Beobachtungen zuordnet, $\mathbf{u}$: Vektor von Zuchtwerten
+
 
 ## Mit GS
 
