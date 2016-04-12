@@ -22,4 +22,4 @@ Beim gängigen Verfahren zur genomischen Zuchtwertschätzung braucht es mehrere 
 
 Was bedeuten die $a$- Werte in den Modellen der genomischen Zuchtwertschätzung und welchem genetischen Modell werden diese entnommen?
 
-## Aufgabe 1
+## Aufgabe 1: 
