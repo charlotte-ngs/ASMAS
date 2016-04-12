@@ -1,0 +1,25 @@
+---
+title: "ASMNW - Übung 1"
+author: "Peter von Rohr"
+date: "`r Sys.Date()`"
+output: pdf_document
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Kontrollfrage 1
+
+Welches Modell wurde vor der Genomischen Selektion zur Zuchtwertschätzung verwendet und welche Tiere bekamen in diesem Modell Zuchtwerte?
+
+
+## Kontrollfrage 2
+
+Beim gängigen Verfahren zur genomischen Zuchtwertschätzung braucht es mehrere Schritte, wie sehen diese aus?
+
+## Kontrollfrage 3
+
+Was bedeuten die $a$- Werte in den Modellen der genomischen Zuchtwertschätzung und welchem genetischen Modell werden diese entnommen?
+
+## Aufgabe 1
