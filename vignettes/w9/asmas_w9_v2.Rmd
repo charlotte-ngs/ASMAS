@@ -1,0 +1,32 @@
+---
+title: "Multiple Lineare Regression"
+author: "Peter von Rohr"
+date: "18 April 2016"
+output: 
+  beamer_presentation:
+    fig_crop: no
+    fig_height: 6
+    fig_width: 10
+    includes:
+      in_header: tex/ethslidesheader.tex
+    keep_tex: yes
+documentclass: ETHbeamerclass
+classoption: first,ETH3,navigation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Outline
+
+- Das Modell
+- Stochastische Komponente: Zufälliger Rest
+- Methode der kleinsten Quadrate - Least Squares
+- Annahmen und Eigenschaften
+- Tests und Konfidenzintervalle
+- Analyse der Residuen
+- Modellwahl
+
+

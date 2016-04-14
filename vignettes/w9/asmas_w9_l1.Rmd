@@ -36,6 +36,16 @@ Was bedeuten die $a$- Werte in den Modellen der genomischen Zuchtwertschätzung 
 - Sie stammen aus dem Substitutionsmodell
 
 
+## Kontrollfrage 4
+
+Im Paper zur Deregression stehen nach Gleichung (8) zwei Probleme, weshalb mit BLUP geschätzte Zuchtwerte nicht ideal sind als Beobachtungen in genomischer Zuchtwertschätzung. Fassen Sie diese zwei Probleme kurz zusammen.
+
+### Lösung
+1. Durch das Hinzufügen des Schätzfehlers wird die Varianz des Schätzers im Vergleich zur Varianz der phänotypischen Beobachtungen reduziert. Das würde zu einer Unterschätzung der Allel-Substitutionseffekte führen
+2. Durch die Eigenschaften von BLUP werden die geschätzten Zuchtwerte zum Durchschnitt der Eltern gedrückt (shrinkage estimation). Das Ausmass, wie stark die einzelen Schätzwerte zu den Elterndurchschnitten gedrückt werden, hängt vom Informationsgehalt, d.h. vom Bestimmungsmass ab. Dies verfälscht aber die Schätzwerte von Allelsubstitutionseffekten.
+
+
+
 ## Aufgabe 1: Reduktion der Varianz
 Bei der BLUP-Zuchtwertschätzung haben die geschätzten Zuchtwerte im Vergleich zu den phänotypischen Werten eine reduzierte Varianz. Dies können wir an folgendem Beispiel mit `R` zeigen. Wir verwenden dazu einen Datensatz aus einer Übung der Züchtungslehre. Der Datensatz wird mit folgendem Befehl eingelesen:
 

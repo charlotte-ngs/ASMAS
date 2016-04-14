@@ -18,8 +18,57 @@ Welches Modell wurde vor der Genomischen Selektion zur Zuchtwertschätzung verwe
 
 Beim gängigen Verfahren zur genomischen Zuchtwertschätzung braucht es mehrere Schritte, wie sehen diese aus?
 
+
 ## Kontrollfrage 3
 
 Was bedeuten die $a$- Werte in den Modellen der genomischen Zuchtwertschätzung und welchem genetischen Modell werden diese entnommen?
 
-## Aufgabe 1: 
+
+## Kontrollfrage 4
+
+Im Paper zur Deregression stehen nach Gleichung (8) zwei Probleme, weshalb mit BLUP geschätzte Zuchtwerte nicht ideal sind als Beobachtungen in genomischer Zuchtwertschätzung. Fassen Sie diese zwei Probleme kurz zusammen.
+
+
+## Aufgabe 1: Reduktion der Varianz
+Bei der BLUP-Zuchtwertschätzung haben die geschätzten Zuchtwerte im Vergleich zu den phänotypischen Werten eine reduzierte Varianz. Dies können wir an folgendem Beispiel mit `R` zeigen. Wir verwenden dazu einen Datensatz aus einer Übung der Züchtungslehre. Der Datensatz wird mit folgendem Befehl eingelesen:
+
+```{r ReadData, eval=FALSE}
+dfLmm <- read.csv2(file =
+  "http://charlotte-ngs.github.io/LivestockBreedingAndGenomics/w7/zl_w7_u5_DataLmm.csv")
+```
+
+Die Struktur der Daten können wir mit dem Befehl `str` anzeigen. Die Kolonne `y` enthält die beobachteten Daten. 
+
+```{r StructureData, eval=FALSE}
+str(dfLmm)
+```
+
+\pagebreak
+
+BLUP-Zuchtwerte werden mit dem Package `pedigreemm` geschätzt.
+
+```{r BlupAniModel, eval=FALSE}
+library(pedigreemm)
+nAnzAnim <- 6
+pedP1 <- pedigree(sire = as.integer(c(NA,NA,1, 1,4,5)),
+           dam  = as.integer(c(NA,NA,2,NA,3,2)),
+           label = as.character(1:nAnzAnim))
+
+fitReml <- pedigreemm(formula = y ~ FixerFactor + (1 | ID),
+                      data = dfLmm,
+                      pedigree = list(ID = pedP1))
+```
+
+Die geschätzten Zuchtwerte erhalten wir aus dem Slot `u` aus dem Resultat-Objekt `fitReml`. Der Befehl 
+
+```{r AccessSlotU, eval=FALSE}
+fitReml@u
+```
+
+zeigt den Vektor der geschätzten Zuchtwerte. Die Funktion `var()` kann nun verwendet werden um die Varianz der Beobachtungen mit der Varianz der geschätzten Zuchtwerte zu vergleichen.
+
+
+
+
+
+
