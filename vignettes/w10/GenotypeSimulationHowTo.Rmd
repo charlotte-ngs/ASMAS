@@ -13,13 +13,34 @@ vignette: >
 This mini-how-to describes possible approaches in order to simulate genotypes in a pedigree. 
 
 ## Other packages
-Knowing that Karl Broman has authored a QTL mapping package and a book on QTL-mapping, a quick search for other packages resulted in the package `QTLRel`. The package comes with an example dataset that contains a pedigree, genetic data and phenotypic information. The data can be made available using
+Knowing that Karl Broman has authored a QTL mapping package and a book on QTL-mapping, a quick search for other packages resulted in the package `QTLRel`. 
+
+
+```{r InstallQTLRel}
+if (!require(QTLRel))
+  install.packages(pkgs = "QTLRel")
+```
+
+The package comes with an example dataset that contains a pedigree, genetic data and phenotypic information. The data can be made available using
 
 ```{r LoadQLTRelData}
 load(file = file.path(system.file(package = "QTLRel", "data"), "miscEx.RData"))
 ```
 
 ### Estimation of a-Effects using phenotypic data
+In existing data, it is difficult to find the six most significant loci. Alternatively, we start six loci and simulate a new phenotype.
+
+```{r SelectLoci}
+phenDatAEst <- data.frame(sex = pdatF8[,"sex"], age = pdatF8[,"age"], gdatF8[,5:10])
+str(phenDatAEst)
+```
+
+Simulating the genetic part for a single individual corresponds to 
+
+```{r SimSingleIndividual}
+ a_values <- c(13,3,5.3,2.1,6.7,9.1)
+crossprod(as.numeric(phenDatAEst[1,3:8]-2),a_values)
+```
 
 
 
