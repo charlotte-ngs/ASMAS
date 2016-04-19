@@ -191,7 +191,7 @@ einer endlichen Anzahl Genorten mit hauptsächlich additiver Wirkung.
 ## Modelle in GS 
 
 - Wie sieht der Schritt 1 aus?
-- Idealfall: wahre Zuchtwerte (Summe aller additiven Genwirkungen) und SNP Genotypen als Beobachtungen, daraus können Substitutionseffekte geschätzt werden
+- Idealfall: Summe aller additiven Genwirkungen und SNP Genotypen als Beobachtungen, daraus können Substitutionseffekte mit folgendem Modell geschätzt werden
 
 $$\mathbf{g} = \mathbf{1}\mu + \mathbf{M}\mathbf{a} + \mathbf{\epsilon}$$
 

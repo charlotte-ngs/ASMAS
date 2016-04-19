@@ -1,0 +1,58 @@
+---
+title: "ASMNW - Lösung 2"
+author: "Peter von Rohr"
+date: "`r Sys.Date()`"
+output: pdf_document
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Kontrollfrage 1
+Weshalb werden in Schritt 1 der genomischen Selektion geschätzte Zuchtwerte anstelle von phänotypischen Beobachtungen verwendet?
+
+### Lösung
+- Für bestimmte Tiere sind phänotypische Beobachtungen nicht verfügbar (Ahnen, ausländische Tiere)
+- Bei internationalem Austausch: unterschiedliche nationale Modelle berüsichtigen verschiedene Umweltfaktoren
+
+
+## Kontrollfrage 2
+Welche Eigenschaft der BLUP-Zuchtwerte führt zu der problematischen Reduktion der Varianz der geschätzten Zuchtwerte im Vergleich zur Varianz der phänotypischen Werte?
+
+### Lösung
+Da bei BLUP Zuchtwerten gilt, dass 
+
+$$cov(\hat{g}_i, g_i) = var(\hat{g}_i)$$
+
+folgt, dass 
+
+$$var(\hat{g}_i - g_i) =  var(\hat{g}_i) + var(g_i) - 2*cov(\hat{g}_i, g_i) =  var(g_i) - var(\hat{g}_i) \ge 0$$
+
+$$\rightarrow  var(g_i) \ge var(\hat{g}_i)$$
+
+
+## Kontrollfrage 3
+Für Schritt 1 der genomischen Selektion wurden folgende Modelle angeschaut:
+
+\begin{tabular}{ll}
+wahre Zuchtwerte  &  $\mathbf{g} = \mathbf{1}\mu + \mathbf{M}\mathbf{a} + \mathbf{\epsilon}$ \\
+phänotypische Beobachtungen  &   $\mathbf{y} = (\mathbf{1}\mu + \mathbf{X}\mathbf{b}) + \mathbf{M}\mathbf{a} + (\mathbf{\epsilon}+ \mathbf{e})$ \\
+geschätzte Zuchtwerte  &  $\hat{\mathbf{g}} = \mathbf{1}\mu + \mathbf{M}\mathbf{a} + (\mathbf{\epsilon} + (\hat{\mathbf{g}} - \mathbf{g}) )$
+\end{tabular}
+
+1. Welche Struktur haben diese Modelle
+2. Welche Parameterschätzmethode wird üblicherweise für diese Modelle verwendet
+3. Wiese kann diese Parameterschätzmethode für die genomische Selektion nicht verwendet werden
+
+### Lösung
+
+1. Regressionsmodelle
+2. Least Squares
+3. Anzahl der Parameter ist grösser als die Anzahl der Beobachtungen
+
+
+## Aufgabe 1: Effekt der Deregression
+
+
+

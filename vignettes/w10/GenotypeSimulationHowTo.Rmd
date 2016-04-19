@@ -1,0 +1,37 @@
+---
+title: "Genotype Simulation - A Mini-How-To"
+author: "Peter von Rohr"
+date: "`r Sys.Date()`"
+output: pdf_document
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Disclaimer
+This mini-how-to describes possible approaches in order to simulate genotypes in a pedigree. 
+
+## Other packages
+Knowing that Karl Broman has authored a QTL mapping package and a book on QTL-mapping, a quick search for other packages resulted in the package `QTLRel`. The package comes with an example dataset that contains a pedigree, genetic data and phenotypic information. The data can be made available using
+
+```{r LoadQLTRelData}
+load(file = file.path(system.file(package = "QTLRel", "data"), "miscEx.RData"))
+```
+
+### Estimation of a-Effects using phenotypic data
+
+
+
+## Goal
+Given a pedigree, a number of loci and their corresponding allele frequencies in the base population, we want to distribute the genotypes over the pedigree such that mendelian rules of inheritance are satisfied.
+
+
+## Implementation
+The pedigree simulation is implemented using two basic classes of objects
+
+1. A class of GenoLocus objects which describe a genetic locus on the population level. This object contains the name of the locus, the different alleles and the allele frequencies. 
+2. A class of a gene pool object which contains a collection of GenoLocus objects. 
+3. A class of individuals that describe the genetic composition of single individuals.
+
+

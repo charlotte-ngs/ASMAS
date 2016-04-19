@@ -38,7 +38,7 @@ Was bedeuten die $a$- Werte in den Modellen der genomischen Zuchtwertschätzung 
 
 ## Kontrollfrage 4
 
-Im Paper zur Deregression stehen nach Gleichung (8) zwei Probleme, weshalb mit BLUP geschätzte Zuchtwerte nicht ideal sind als Beobachtungen in genomischer Zuchtwertschätzung. Fassen Sie diese zwei Probleme kurz zusammen.
+Im Paper zur Deregression (auf dem Stick oder unter: http://gsejournal.biomedcentral.com/articles/10.1186/1297-9686-41-55) stehen nach Gleichung (8) zwei Probleme, weshalb mit BLUP geschätzte Zuchtwerte nicht ideal sind als Beobachtungen in genomischer Zuchtwertschätzung. Fassen Sie diese zwei Probleme mit Ihren Worten kurz zusammen.
 
 ### Lösung
 1. Durch das Hinzufügen des Schätzfehlers wird die Varianz des Schätzers im Vergleich zur Varianz der phänotypischen Beobachtungen reduziert. Das würde zu einer Unterschätzung der Allel-Substitutionseffekte führen
