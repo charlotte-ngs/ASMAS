@@ -31,18 +31,80 @@ load(file = file.path(system.file(package = "QTLRel", "data"), "miscEx.RData"))
 In existing data, it is difficult to find the six most significant loci. Alternatively, we start six loci and simulate a new phenotype.
 
 ```{r SelectLoci}
-phenDatAEst <- data.frame(sex = pdatF8[,"sex"], age = pdatF8[,"age"], gdatF8[,5:10])
+### # select loci into separate df
+genoDat <- gdatF8[,5:10]
+### # set the NAs to heterozygotes
+for (nColIdx in 1L:ncol(genoDat)){
+  naGeno <- which(is.na(genoDat[,nColIdx]))
+  if (length(naGeno) > 0) {
+    genoDat[naGeno,nColIdx] <- 2
+  }
+}
+phenDatAEst <- data.frame(sex = pdatF8[,"sex"], age = pdatF8[,"age"], genoDat)
 str(phenDatAEst)
 ```
 
 Simulating the genetic part for a single individual corresponds to 
 
 ```{r SimSingleIndividual}
- a_values <- c(13,3,5.3,2.1,6.7,9.1)
+a_values <- c(1.3,3,5.3,2.1,6.7,9.1)
 crossprod(as.numeric(phenDatAEst[1,3:8]-2),a_values)
 ```
 
+Simulating the phenotypes for all individuals leads to:
 
+```{r SimAllIndividuals}
+### # adding genetic contribution
+bwt_sim <- sapply(1:nrow(phenDatAEst), 
+                  function(x) crossprod(as.numeric(phenDatAEst[x,3:8]-2), a_values), USE.NAMES = FALSE)
+```
+
+Now that the genetic effects are done, we are adding `sex` as a fixed effect
+```{r AddFixedEffects}
+### # adding fixed effects based on estimates
+set.seed(1234)
+sexM_effect <- rnorm(n = 1, mean = 6.78, sd = 1.19)
+bwt_sim[which(phenDatAEst[,"sex"] == "M")] <- 
+  bwt_sim[which(phenDatAEst[,"sex"] == "M")] + sexM_effect
+summary(bwt_sim)
+```
+
+Since we need the phenotypes to be positive, we re-set the minimum to 0 and we add the intercept
+```{r ResetZeroAddIntercept}
+### # reset bwt_sim to 0
+bwt_sim <- bwt_sim - min(bwt_sim)
+intercept_effect <-  rnorm(n = 1,mean = 16.41, sd = 6.78)
+bwt_sim <- bwt_sim + intercept_effect
+summary(bwt_sim)
+```
+
+So far we have added deterministic components. By adding some random residuals, we put a stocastic component into the model
+```{r AddResiduals}
+### # residuals
+bwt_sim <- bwt_sim + rnorm(n = length(bwt_sim), mean = 0, sd = 1.5)
+summary(bwt_sim)
+```
+
+Finally, we are ready to put together the dataset and we do some analysis to check the simulation. 
+```{r WrapUpAndCheck}
+### # put together the new dataframe
+phenDatAEst <- cbind(phenDatAEst, bwt_sim)
+summary(phenDatAEst)
+
+### # linear model
+lm_bwt_sim <- lm(bwt_sim ~ ., data = phenDatAEst)
+summary(lm_bwt_sim)
+plot(lm_bwt_sim)
+```
+
+Finally we can write the simulated dataset to a file using `write.table()`.
+
+```{r WriteSimData}
+write.csv2(phenDatAEst, file = "geno_sel_step1.csv", quote = FALSE)
+```
+
+
+\pagebreak
 
 ## Goal
 Given a pedigree, a number of loci and their corresponding allele frequencies in the base population, we want to distribute the genotypes over the pedigree such that mendelian rules of inheritance are satisfied.

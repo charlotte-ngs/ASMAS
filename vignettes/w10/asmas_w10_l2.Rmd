@@ -52,7 +52,17 @@ geschätzte Zuchtwerte  &  $\hat{\mathbf{g}} = \mathbf{1}\mu + \mathbf{M}\mathbf
 3. Anzahl der Parameter ist grösser als die Anzahl der Beobachtungen
 
 
-## Aufgabe 1: Effekt der Deregression
+## Aufgabe 1: Schätzung der a-Werte aufgrund phänotypischer Leistungen
+Der Datensatz `geno_sel_step1.csv` enthält phänotypische Werte in der Kolonne `bwt_sim`. Diese Werte wurden aufgrund von sechs genetischen Loci simuliert. Abgesehen von den genetischen Informationen gibt es auch noch zwei fixe Faktoren, welche mit `sex` und `age` bezeichnet sind. Alle Angaben sind in der gleichen Datei enthalten.
+
+### Ziel
+Schätzen Sie für die sechs Loci die entsprechenden `a`-Werte.
+
+### Ihre Aufgaben
+Da es sich nur um sechs Loci handelt, können die `a`-Werte mit einer Regression geschätzt werden. Folgende Schritte sollten zum Ziel führen.
+
+1. 
+
 
 
 
