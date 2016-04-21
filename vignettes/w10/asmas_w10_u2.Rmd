@@ -1,5 +1,5 @@
 ---
-title: "ASMNW - Lösung 2"
+title: "ASMNW - Übung 2"
 author: "Peter von Rohr"
 date: "`r Sys.Date()`"
 output: pdf_document
@@ -12,24 +12,9 @@ vignette: >
 ## Kontrollfrage 1
 Weshalb werden in Schritt 1 der genomischen Selektion geschätzte Zuchtwerte anstelle von phänotypischen Beobachtungen verwendet?
 
-### Lösung
-- Für bestimmte Tiere sind phänotypische Beobachtungen nicht verfügbar (Ahnen, ausländische Tiere)
-- Bei internationalem Austausch: unterschiedliche nationale Modelle berüsichtigen verschiedene Umweltfaktoren
-
 
 ## Kontrollfrage 2
 Welche Eigenschaft der BLUP-Zuchtwerte führt zu der problematischen Reduktion der Varianz der geschätzten Zuchtwerte im Vergleich zur Varianz der phänotypischen Werte?
-
-### Lösung
-Da bei BLUP Zuchtwerten gilt, dass 
-
-$$cov(\hat{g}_i, g_i) = var(\hat{g}_i)$$
-
-folgt, dass 
-
-$$var(\hat{g}_i - g_i) =  var(\hat{g}_i) + var(g_i) - 2*cov(\hat{g}_i, g_i) =  var(g_i) - var(\hat{g}_i) \ge 0$$
-
-$$\rightarrow  var(g_i) \ge var(\hat{g}_i)$$
 
 
 ## Kontrollfrage 3
@@ -45,12 +30,6 @@ geschätzte Zuchtwerte  &  $\hat{\mathbf{g}} = \mathbf{1}\mu + \mathbf{M}\mathbf
 2. Welche Parameterschätzmethode wird üblicherweise für diese Modelle verwendet
 3. Wiese kann diese Parameterschätzmethode für die genomische Selektion nicht verwendet werden
 
-### Lösung
-
-1. Regressionsmodelle
-2. Least Squares
-3. Anzahl der Parameter ist grösser als die Anzahl der Beobachtungen
-
 
 ## Aufgabe 1: Schätzung der a-Werte aufgrund phänotypischer Leistungen
 Der Datensatz `geno_sel_step1.csv` enthält phänotypische Werte in der Kolonne `bwt_sim`. Diese Werte wurden aufgrund von sechs genetischen Loci simuliert. Abgesehen von den genetischen Informationen gibt es auch noch zwei fixe Faktoren, welche mit `sex` und `age` bezeichnet sind. Alle Angaben sind in der gleichen Datei enthalten.
@@ -63,31 +42,14 @@ Da es sich nur um sechs Loci handelt, können die `a`-Werte mit einer Regression
 
 1. Einlesen der Daten mit 
 
-```{r ReadInput}
-dfGenoSelDat <- read.csv2(file = "http://charlotte-ngs.github.io/GELSAM/w10/geno_sel_step1.csv", stringsAsFactors = FALSE)
-str(GenoSelDat)
+```{r ReadInput, eval=FALSE}
+dfGenoSelDat <- read.csv2(file = "http://charlotte-ngs.github.io/GELSAM/w10/geno_sel_step1.csv", 
+                          stringsAsFactors = FALSE)
 ```
 
 2. Lineare Regression mit funktion `lm()` wobei die phänotypischen Werte in Kolonne `bwt_sim` gespeichert sind.
-```{r LinearModel}
-lmBwtSim <- lm(dfGenoSelDat$bwt_sim  ~ ., data = dfGenoSelDat)
-```
 
 3. Anzeige der Resultate mit Funktion `summary()`
-```{r SummaryResults}
-summary(lmBwtSim)
-```
 
 Wie gross sind nun die `a`-Werte der sechs Loci?
-
-Die `a`-Werte entsprechen den einzelen Schätzwerten für die gentischen Loci. Diese können mit folgender Funktion angezeigt werden:
-
-```{r ShowAvalues}
-coefficients(lmBwtSim)[4:9]
-```
-
-
-
-
-
 

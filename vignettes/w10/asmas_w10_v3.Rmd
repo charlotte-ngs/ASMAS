@@ -1,0 +1,79 @@
+---
+title: "Multiple Lineare Regression (Teil 2)"
+author: "Peter von Rohr"
+date: "25 April 2016"
+output: 
+  beamer_presentation:
+    includes:
+      in_header: tex/ethslidesheader.tex
+  keep_tex: yes 
+output_file: asmas_w10_v3.pdf
+documentclass: ETHbeamerclass
+classoption: first,ETH3,navigation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, results ='asis')
+```
+
+
+## Outline
+
+- Tests und Konfidenzintervalle
+- Analyse der Residuen
+- Modellwahl
+
+
+## Annahmen für ein lineares Modell
+- Ausser, dass die Matrix $\mathbf{X}$ vollen Rang hat ($p < n$) wurden bis jetzt keine Annahmen gemacht
+1. Lineares Modell ist korrekt $\rightarrow E(\mathbf{\epsilon}) = \mathbf{0}$
+2. Die Werte in $\mathbf{X}$ sind exakt
+3. Die Varianz der Fehler ist konstant ("Homoskedazidität") für alle Beobachtungen $\rightarrow Var(\mathbf{\epsilon}) = \mathbf{I} * \sigma^2$
+4. Die Fehler sind unkorreliert
+5. Weitere Eigenschaften folgen, falls die Fehler normal verteilt sind
+
+Was passiert, wenn Annahmen nicht erfüllt sind?
+
+
+## Massnahmen und Alternativen
+- Falls Annahme 3 (konstante Varianzen) verletzt ist, verwenden wir weighted least squares
+- Falls Annahme 5 der Normalität nicht gilt, verwenden wir robuste Methoden
+- Falls Annahme 2 falsch ist, brauchen wir eine Methode namens "errors in variables"
+- Falls Annahme 1 nicht zutrifft, brauchen wir ein nicht-lineares Modell
+
+
+## Annahmen 1 und 4 nicht erfüllt
+```{r PillKink}
+rcoursetools::insertOdgAsPdf(psOdgFileStem = "PillKink", pnPaperWidthScale = 0.8, psOdgDir = "../w9/odg")
+```
+
+
+## Mehrere Regressionen mit einer Variablen
+- __Wichtig__: Multiple lineare Regression nicht durch mehrere Regressionen mit einer Variablen ersetzen
+- Beispiel: $y = 2*x1 - x2$
+
+```{r MultiLinRegNoSimpleLinReg, echo=FALSE, results='asis'}
+x1 <- c(0, 1, 2, 3, 0, 1, 2, 3)
+x2 <- c(-1,0,1,2,1,2,3,4)
+y <- 2*x1-x2
+dfTab <- rbind(x1,x2,y)
+pander::pander(dfTab, style = "rmarkdown")
+```
+
+## Einfache Regression mit x2
+```{r SimpleLinRegX2, echo=TRUE}
+x1 <- c(0, 1, 2, 3, 0, 1, 2, 3)
+x2 <- c(-1,0,1,2,1,2,3,4)
+y <- 2*x1-x2
+dfData <- data.frame(x1=x1, x2=x2, y=y)
+lm_simple_x2 <- lm(y ~ x2, data = dfData)
+coefficients(lm_simple_x2)
+```
+
+## Resultat
+```{r SimpleLinRegX2Result, echo=TRUE}
+summary(lm_simple_x2)
+```
+
+
+
