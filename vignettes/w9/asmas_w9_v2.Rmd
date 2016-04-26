@@ -28,7 +28,7 @@ knitr::opts_chunk$set(echo = FALSE, results ='asis')
 - Modellwahl
 
 
-## Das linear Modell
+## Das lineare Modell
 
 - Gegeben: __Zielgrösse__ (response variable) $y_i$ für Individuum $i$. Entspricht einer Beobachtung oder Messung, welche zu $i$ gehört.
 - Gegeben: mehrere __erklärende Variablen__ (predictors or covariables) $x_{i,1}, x_{i,2}, ..., x_{i,p}$, welche Eigenschaften von $i$ beschreiben
@@ -80,10 +80,10 @@ wobei:
 set.seed(7643)
 nNrCalf <- 5
 Calf <- 1:nNrCalf
-WWG <- c(4.5, 2.9, 3.9, 3.5, 5.0)
-PWG <- c(6.8, 5.0, 6.8, 6.0, 7.5)
-BW <- round(10*PWG/2 + rnorm(nNrCalf), digits = 1)
-dfGainData <- data.frame(Calf, BW, WWG=2*WWG/10, PWG=2*PWG/10)
+WWG <- c(4.5, 2.9, 3.9, 3.5, 5.0)/5
+PWG <- c(6.8, 5.0, 6.8, 6.0, 7.5)/5
+BW <- round(25*PWG + rnorm(nNrCalf), digits = 1)
+dfGainData <- data.frame(Calf, BW, WWG=WWG, PWG=PWG)
 #dfGainData
 #summary(dfGainData)
 ```
@@ -107,7 +107,7 @@ rcoursetools::insertOdgAsPdf(psOdgFileStem = "TableGainData", pnPaperWidthScale 
 \begin{equation}
 \mathbf{y} = \left[ 
   \begin{array}{c}
-  6.8 \\ 5.0 \\ 6.8 \\ 6.0 \\ 7.5
+  1.36 \\ 1.00 \\ 1.36 \\ 1.20 \\ 1.50
   \end{array}
 \right], 
 \mathbf{X} = \left[ 

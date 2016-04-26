@@ -114,3 +114,9 @@ wobei $t_{n-p}$ für die Student-t Verteilung mit $n-p$ Freiheitsgraden steht.
 
 $\rightarrow$ falls z. Bsp. $\beta_i$ und $\beta_j$ stark korreliert sind und wir testen die beiden Nullhypothesen $H_{0j}: \beta_j = 0$ und $H_{0i}: \beta_i = 0$, kann durch die Korrektur der anderen Variablen der Effekt von $\beta_i$ und $\beta_j$ auf $Y$ durch den t-Test nicht gefunden werden.
 
+
+## Varianzanalyse und F-Test
+
+- Zerlegung der quadrierten Abweichungen der Beobachtungen $Y$ vom Mittelwert $\bar{Y}$ in zwei Teile
+1. Abweichung des gefitteten Wertes $\hat{Y}$ vom Mittelwert $\bar{Y}$
+2. 

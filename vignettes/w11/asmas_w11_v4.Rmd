@@ -1,0 +1,25 @@
+---
+title: "Multiple Lineare Regression (Teil 3)"
+author: "Peter von Rohr"
+date: "2 Mai 2016"
+output: 
+  beamer_presentation:
+    fig_crop: no
+    fig_height: 6
+    fig_width: 10
+    includes:
+      in_header: tex/ethslidesheader.tex
+    keep_tex: yes
+documentclass: ETHbeamerclass
+classoption: first,ETH3,navigation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Globaler Test eines Modells
+- Beim t-Test hatten wir jede einzelne erklärende Variable getestet. 
+- Ein allgemeinerer Test wäre die Überprüfung, ob überhaupt eine der erklärenden Variablen einen Einfluss auf die Zielgrösse hat
+

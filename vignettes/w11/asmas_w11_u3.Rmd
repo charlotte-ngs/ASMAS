@@ -1,0 +1,33 @@
+---
+title: "ASMNW - Übung 3"
+author: "Peter von Rohr"
+date: "`r Sys.Date()`"
+output: pdf_document
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Kontrollfrage 1
+1. Aus welchen Komponenten besteht ein lineares Modell? 
+2. Welcher Zusammenhang besteht zwischen diesen Komponenten
+
+
+## Kontrollfrage 2
+1. Welche fixen und welche zufälligen Effekte gibt es in einer multiplen linearen Regression
+2. Wie lauten Erwartungswerte und Varianzen der zufälligen Effekte
+
+
+## Kontrollfrage 3
+Welche vier Ziele wollen wir mit einer multiplen linearen Regression erreichen?
+
+
+## Kontrollfrage 4
+1. Was bedeutet der Ausdruck $$\hat{\mathbf{\beta}} = arg min_{\beta} ||\mathbf{y} - \mathbf{X}\mathbf{\beta}||^2$$?
+2. Welcher Schätzer resultiert aus dem Ausdruck unter 1?
+
+
+## Aufgabe 1: 
+Während der Vorlesung habe wir das Beispiel mit der Zunahme nach dem Absetzen als Zielgrösse betrachtet. Wir haben aber nirgends die Koeffizienten und die geschätzte Restvarianz berechnet. Stellen Sie für dieses kleine Beispiel das lineare Modell gemäss Vorlesungsunterlagen auf und berechnen Sie die Koeffizienten des linearen Modells und die geschätzte Restvarianz. 
+
