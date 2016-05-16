@@ -1,0 +1,208 @@
+---
+title: "Lerntext zu LASSO"
+author: "Peter von Rohr"
+date: "`r Sys.Date()`"
+output: pdf_document
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: asmas_w13_n1.bibtex  
+---
+
+
+## Dokumentenstatus
+```{r DocumentStatus, echo=FALSE, results='asis'}
+r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
+r6objStat$setProject("ASMAS")
+r6objStat$setVersion("0.0.901")
+r6objStat$setStatus("Initialisierung")
+
+r6objStat$writeStatusToFile()
+r6objStat$knitr_kable()
+```
+
+
+## Abkürzungen
+```{r DocumentAbrev, echo=FALSE, results='asis'}
+dfAbrev <- data.frame(Abk = c("LASSO","RSS"),
+                      Bedeutung = c("Least Absolute Shrinkage and Selection Operator",
+                                    "Restsummenquadrate (Residual Sums of Squares"))
+knitr::kable(dfAbrev)
+```
+
+
+\tableofcontents
+
+
+# Erklärung
+Dieses Dokument gibt einerseits eine Zusammenfassung zum Thema LASSO und ist andererseits als Lerntext organisiert. Das heisst, nach jedem Abschnitt wird eine Kontrollfrage gestellt. Kann diese Frage beantwortet werden, können wir im Text weiterfahren, sonst empfehle ich, den der Frage vorangegangenen Abschnitt noch einmal zu lesen. Der Inhalt basiert im Wesentlichen auf Kapitel 6 von 
+@JWHT2013. 
+
+\pagebreak
+
+# Einführung
+Das lineare Modell 
+
+\begin{equation}
+y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_p x_{ip} + \epsilon_i
+\label{eq:StandardLinearModel}
+\end{equation}
+
+wird verwendet um Zusammenhänge zwischen einer Beobachtung $y_i$ (Zielgrösse) und erklärenden Variablen $x_{i1}, x_{i2},  ...,  x_{ip}$ zu beschreiben. Zusätzlich zu einer Beobachtung $y_i$ haben wir auch noch $p$ Werte von erklärenden Variablen. Somit resultiert der folgenden Vektor an Informationen für das Ergeignis $i$: 
+
+$$\left(x_{i1}, x_{i2},  ...,  x_{ip}, y_i \right)$$
+
+Die $(p+1)$ Werte $\beta_0, ..., \beta_p$ und $\epsilon_i$ sind unbekannt. Es wird angenommen, dass die Werte der erklärenden Variablen ($x_{i1}, x_{i2},  ...,  x_{ip}$) exakt, d.h. ohne Messfehler oder andere Ungenauigkeiten, bekannt sind. Für einen Datensatz mit $n$ Beobachtungen werden die resultierenden $n$ Gleichungen vorzugsweise in Matrix-Vektor-Schreibweise notiert.
+
+\begin{equation}
+\mathbf{y} = \mathbf{X}\mathbf{\beta} + \mathbf{\epsilon}
+\label{eq:StandardLinearModelMatrixVektor}
+\end{equation}
+
+\rule{16cm}{.1pt}
+
+__Kontrollfrage 1__: Teilen Sie die nachfolgenden Komponenten in die zwei Kategorien bekannt oder unbekannt ein
+
+```{r Kf1KompTable, echo=FALSE, results='asis'}
+Komponenten <- c("$y_i$", "$x_{i1}, x_{i2},  ...,  x_{ip}$", "$\\beta_0, ..., \\beta_p$", "$\\epsilon_i$")
+nTableRows <- length(Komponenten)
+bekannt <- rep("", nTableRows)
+unbekannt <- rep("", nTableRows)
+dfTable <- data.frame(Komponenten = Komponenten, bekannt = bekannt, unbekannt = unbekannt)
+knitr::kable(dfTable)
+```
+
+\rule{16cm}{.1pt}
+
+
+## Stochastische Restkomponente
+Die $n$ unbekannten Resteffekte im Vektor $\mathbf{\epsilon}$ werden als zufällige Effekte modelliert, wobei angenommen wird, dass sich diese Resteffekte im Mittel aufheben, d.h., dass deren Erwartungswert $E(\mathbf{\epsilon}) = \mathbf{0}$ ist. Die Streuung der Resteffekte wird im Standardmodell als konstant angenommen. Für die Covarianz des Vektors der Resteffekte bedeutet das, dass $var(\mathbf{\epsilon}) = \mathbf{I}*\sigma^2$ ist. Die Varianzkomponente $\sigma^2$ ist neben den Koeffizienten im Vektor $\mathbf{\beta}$ ein weiterer unbekannter Parameter, welcher von den Daten geschätzt werden muss.
+
+
+## Parameterschätzung
+Unter der Annahme, dass die Matrix $\mathbf{X}$ vollen Kolonnenrang hat, d.h. die Anzahl Beobachtungen $n$ grösser ist als die Anzahl Parameter (hier $p+1$) lassen sich die unbekannten Parameter $\mathbf{\beta}$ mit __Least Squares__ schätzen. Der Least Squares Schätzer $\hat{\mathbf{\beta}}$ für $\mathbf{\beta}$ wird berechnet aus 
+
+\begin{equation}
+\hat{\mathbf{\beta}} = argmin_{\beta}||\mathbf{y} - \mathbf{X}\mathbf{\beta}||^2
+\label{eq:LsEstimateBeta}
+\end{equation}
+
+wobei $||.||$ für die Euklidsche Norm (Länge) im $n$-dimensionalen Raum steht. Wird das Minimierungsproblem in Gleichung (\ref{eq:LsEstimateBeta}) aufgelöst, dann resultiert der folgende Ausdruck für $\hat{\mathbf{\beta}}$
+
+\begin{equation}
+\hat{\mathbf{\beta}} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}
+\label{eq:LsEstimateBetaSol}
+\end{equation}
+
+Betrachten wir den Ausdruck in Gleichung (\ref{eq:LsEstimateBetaSol}) wird klar, weshalb die Matrix $\mathbf{X}$ vollen Kolonnenrang haben muss, da nur so die Inverse $(\mathbf{X}^T\mathbf{X})^{-1}$ berechnet werden kann.
+
+\rule{16cm}{.1pt}
+
+__Kontrollfrage 2__: 
+
+a. Welche Anforderung bezüglich des Ranges der Matrix $\mathbf{X}$ besteht? 
+b. Aus welchem Grund besteht diese Anforderung aus 2a?
+
+\rule{16cm}{.1pt}
+
+
+# Alternativen zu Least Squares
+Das lineare Modell (\ref{eq:StandardLinearModel}) erweist sich in der Praxis als sehr brauchbar. Mit der Least Squares-Technik besteht auch eine einfache und sehr gut etablierte Methode zur Parameterschätzung. In kürzerer Vergangenheit auch mit dem Aufkommen des Phänomes von "Big Data", welches das systematische Sammeln von grossen Datenmengen ermöglicht, treten häufiger Probleme auf, bei welchen die im einleitenden Abschnitt aufgestellte Bedingung an Least Squres, dass nämlich $n > p$ gelten muss, nicht zutrifft.
+
+Da wir die positiven Eigenschaften des linearen Modells gerne beibehalten möchten, wurde nach Alternativen zu Least Squres gesucht. Diese möglichen Alternativen können in drei Kategorien eingeteilt werden.
+
+1. __Subset Selektion__: Aus den $p$ erklärenden Variablen wird ein Subset von "relevanten" Variablen ausgewählt. Alle anderen Variablen werden ignoriert. Die relevanten Variablen werden oft aufgrund der Signifikanz des geschätzten Regressionskoeffizienten $\beta_j$ identifiziert.
+2. Regularisierung.(Shrinkage): Alle $p$ erklärenden Variablen werden verwendet. Die geschätzten Regressionskoeffizienten werden durch bestimmte Techniken gegen den Nullpunkt "gedrückt". Dieser Prozess wird als Schrumpfung (Shrinkage) bezeichnet. Die so erzeugte Reduktion der Variabilität der Schätzwerte wird als Regularisation bezeichnet.
+3. __Dimensionsreduktion__: Die $p$ erklärenden Variablen werden zu $m$ Linearkombinationen reduziert. Diese Reduktion kann mit Techniken, wie Principal Components Analysis oder Faktoranalyse gemacht werden.
+
+
+\rule{16cm}{.1pt}
+
+__Kontrollfrage 3__: 
+
+a. Wieso brauchen wir Alternativen zu Least Squares?
+b. Wie sehen die Alternativen zu Least Squares aus?
+
+\rule{16cm}{.1pt}
+
+
+## Lasso
+Es gibt Schätzverfahren, welche mehrere der oben genannten Alternativen zu Least Squares kombinieren. Ein Beispiel dafür ist LASSO. LASSO steht für Least Absolute Shrinkage and Selection Operation und kombiniert "Subset Selection" und Regularisierung. Die Regularisierung wird durch das Hinzufügen eines Terms zu den Rest-Summenquadraten ($RSS$), welche bei Least Squares minimiert werden. In Gleichung (\ref{eq:LsEstimateBeta}) haben wir gesehen, wie $RSS$ verwendet werden zur Berechnung der Least Squares Schätzer
+
+\begin{eqnarray}
+\hat{\mathbf{\beta}}_{LS} & = & argmin_{\beta}||\mathbf{y} - \mathbf{X}\mathbf{\beta}||^2 \nonumber \\
+                     & = & argmin_{\beta} \left\{\sum_{i = 1}^n\left(y_i - \beta_0 - \sum_{j=1}^p \beta_j x_{ij} \right)^2\right\} \nonumber \\
+                     & = & argmin_{\beta} RSS
+\label{eq:LsEstimateBetaExpandRSS}
+\end{eqnarray}
+
+### Regularisierung bei LASSO
+Bei LASSO wird nun zu $RSS$ ein sogenannter Strafterm (penalty term) eingefügt. Dieser Strafterm beträgt $\lambda\sum_{j=1}^p|\beta_j|$. Der Term wird deshalb als Strafterm bezeichnet, weil er mit steigender Summe der Absolutbeträge aller $\beta_j$ immer grösser wird. Diese führt zum gewünschten Effekt der Regularisierung. Das heisst durch das Hinzufügen dieses Strafterms werden die Absolutbeträge und somit die Variabilität der Koeffizientenschätzungen begrenzt, was der eigentliche Sinn und Zweck der Regularisierung ist.
+
+In Formeln ausgedrückt, lauten die geschätzten Regressionskoeffizienten für LASSO, wie folgt:
+
+\begin{eqnarray}
+\hat{\mathbf{\beta}}_{LASSO} & = & argmin_{\beta} \left\{\sum_{i=1}^n\left(y_i - \beta_0 - \sum_{j=1}^p \beta_j x_{ij} \right)^2 + \lambda\sum_{j=1}^p|\beta_j| \right\} \nonumber \\
+                     & = & argmin_{\beta} \left\{RSS + \lambda\sum_{j=1}^p|\beta_j|\right\}
+\label{eq:LsEstimateBetaLASSO}
+\end{eqnarray}
+
+
+### Subset Selection bei LASSO
+Wie schon im vorangegangenen Abschnitt beschrieben, dient der Strafterm $\lambda\sum_{j=1}^p|\beta_j|$ zur Regularisierung der geschätzten Koeffizienten $\beta_j$ im linearen Modell. Der Strafterm spielt auch eine entscheidene Rolle bei der Subset Selection. Dadurch, dass der Strafterm die Absolutbeträge der Koeffizienten $\beta_j$ summiert, werden die Schätzungen von gewissen Koeffizienten explizit auf Null gesetzt. Weshalb dieser Effekt der Subset Selection bei LASSO eintritt kann mit folgender Abbildung (siehe nächste Seite) erklärt werden. 
+
+In dieser Abbildung sind nur zwei erklärende Variablen gezeigt und somit ist $p=2$. Die Koeffizienten zu den erklärenden Variablen werden in der Abbildung mit $b$ und nicht mit $\beta$ bezeichnet. Unter der Annahme, dass wir unendlich viele Daten hätten, wäre der Schätzer der Koeffizienten $b_j$ mit minimalem Fehler am Punkt, welcher in der Abbildung mit $\hat{b}$ bezeichnet ist. Die grünen Ellipsen um diesen Punkt $\hat{b}$ sind die Linien mit konstantem Fehler. Die rote Linie steht für die Grenze, welche durch den Strafterm aus LASSO entsteht. Das heisst geschätzte Koeffizienten können nur links dieser roten Linie liegen. Da wir den geschätzten Koeffizienten $\hat{b}_j$ einerseits minimalen Fehler erreichen wollen und auf der anderen Seite innerhalb der Regularisierungsgrenzen sein müssen, liegen die besten Schätzer für $b_j$ am Schnittpunkt zwischen den grünen Ellipsen und der roten Linie. Durch den Verlauf der roten Linie ist die Wahrscheinlichkeit, dass sich die grünen Ellipsen und die rote Linie auf einer Koordinatenachse schneiden sehr hoch. Schneiden sich die grünen Ellipsen und die rote Linie auf einer Koordinatenachse, dann wurde ein Schätzer für einen Koeffizienten $b_j$ auf Null gesetzt und somit haben wir den gewünschten Effekt der Subset Selection erreicht.
+
+```{r GraphicLasso, echo=FALSE, results='asis'}
+rcoursetools::insertOdgAsPdf(psOdgFileStem = "Lasso", pnPaperWidthScale = 0.8)
+```
+
+\rule{16cm}{.1pt}
+
+__Kontrollfrage 4__: 
+
+a. Wie unterscheidet sich ein LASSO-Schätzer $\beta_{LASSO}$ von einem Least Squares Schäter $\beta_{LS}$?
+b. Wie erreichen wir mit LASSO den Effekt der Regularisierung?
+c. Wie werden mit LASSO gewissen erklärende Variablen selektioniert? 
+
+\rule{16cm}{.1pt}
+
+\pagebreak
+
+# Antworten zu den Kontrollfragen
+
+__Antwort 1__:
+
+```{r A1KompTable, echo=FALSE, results='asis'}
+Komponenten <- c("$y_i$", "$x_{i1}, x_{i2},  ...,  x_{ip}$", "$\\beta_0, ..., \\beta_p$", "$\\epsilon_i$")
+nTableRows <- length(Komponenten)
+bekannt <- c("x","x","","") #rep("", nTableRows)
+unbekannt <- c("","","x","x") #rep("", nTableRows)
+dfTable <- data.frame(Komponenten = Komponenten, bekannt = bekannt, unbekannt = unbekannt)
+knitr::kable(dfTable)
+```
+
+__Antwort 2__: 
+
+a. Matrix $\mathbf{X}$ muss vollen Kolonnenrang haben, d.h. $n > p$ sein
+b. Nur so ist die Inverse $(\mathbf{X}^T\mathbf{X})^{-1}$ berechenbar
+
+
+__Antwort 3__:
+
+a. Least Squares kann nur verwendet werden, wenn $n > p$ gilt, d.h. die Anzahl der Beobachtungen grösser ist als die Anzahl zu schätzender Parameter. Da es aber immer häufiger Anwendungen gibt, bei denen das nicht der Fall ist, brauchen wir Alternativen zu Least Squares. 
+
+b. Es wurden drei Alternativen vorgestellt: (1) Subset-Selection, (2) Regularisation und (3) Dimensionsreduktion
+
+
+__Antwort 4__:
+
+a. Der Unterschied liegt im Strafterm (penalty-term). Dieser tritt nur bei LASSO auf, nicht aber bei Least-Squares
+b. Der Strafterm $\lambda\sum_{j=1}^p|\beta_j|$ wächst mit grösseren Absolutbeträgen der Schätzungen. Somit wird die Variabilität der Koeffizientenschätzungen eingegrenzt.
+c. Die Subset Selection wird durch die Art des Strafterms erreicht. Da beim Strafterm die Absolutbeiträge der Koeffizientenschätzungen summiert werden, werden gewisse Schätzungen von Koeffizienten explizit auf Null gesetzt. Die erklärenden Variablen mit Koeffizientenschätzungen von $0$ werden im linearen Modell nicht berücksichtigt. Somit kommt es zu einer Selektion der erklärenden Variablen.
+
+
+\pagebreak
+
+# References

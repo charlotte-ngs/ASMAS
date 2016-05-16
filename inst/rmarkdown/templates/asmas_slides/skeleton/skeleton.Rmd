@@ -1,0 +1,19 @@
+---
+title: "Title"
+author: "Peter von Rohr"
+date: "`r Sys.Date()`"
+output: 
+  beamer_presentation:
+    fig_crop: no
+    fig_height: 6
+    fig_width: 10
+    includes:
+      in_header: tex/ethslidesheader.tex
+    keep_tex: yes
+documentclass: ETHbeamerclass
+classoption: first,ETH3,navigation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, results = 'asis')
+```

@@ -1,0 +1,83 @@
+---
+title: "ASMNW - Übung 4"
+author: "Peter von Rohr"
+date: "`r Sys.Date()`"
+output: pdf_document
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Kontrollfrage 1
+Eine Voraussetzung für die Verwendung von Least Squares zur Schätzung der Parameter ist, dass die Matrix $\mathbf{X}$ vollen Kolonnenrang hat. Welche Beziehung resultiert aus dieser Voraussetzung für die Beziehung zwischen den Anzahl Parametern $p$ und die Anzahl Beobachtungen $n$?
+
+
+## Kontrollfrage 2
+Abgesehen von Kolonnenrang, wie lauten die fünf weiteren Bedingungen für das Verwenden von multiplen linearen Regressionen
+
+
+## Kontrollfrage 3
+Falls die Bedingung der konstanten Varianz nicht erfüllt ist, hatten wir gezeigt, dass __Generalised Least Squares__ verwendet werden kann. Bei generalised least square nehmen wir an, dass 
+
+$$var(\mathbf{\epsilon}) = \Sigma$$
+
+Diese Co-Varianzmatrix $\Sigma$ wird mit der Cholesky-Zerlegung und das Produkt $\Sigma = \mathbf{C}\mathbf{C}^T$ zerlegt. Die Zielgrössen $\mathbf{y}$ und die erklärenden Variablen in $\mathbf{X}$ werden mit der Matrix $C^{-1}$ transformiert. Daraus resultieren dann
+
+\begin{eqnarray}
+\tilde{\mathbf{y}} &=& \mathbf{C}^{-1} \mathbf{y} \nonumber \\
+\tilde{\mathbf{X}} &=& \mathbf{C}^{-1} \mathbf{X}
+\label{eq:TildeTransform}
+\end{eqnarray}
+
+Gegeben unser ursprüngliches lineares Modell
+
+
+\begin{equation}
+\mathbf{y} = \mathbf{X}\mathbf{\beta} + \mathbf{\epsilon}
+\label{eq:LinearModel}
+\end{equation}
+
+Wie sieht die Beziehung zwischen den Grössen $\tilde{\mathbf{y}}$ und $\tilde{\mathbf{X}}$ aus, insbesondere handelt es sich bei dieser Beziehung wieder um ein lineares Modell und wenn ja, wie sieht dieses aus?
+
+\pagebreak
+
+## Aufgabe 1
+Für unseren Datensatz aus der Vorlesung mit den Zunahmen und dem Geburtsgewicht (siehe \url{http://charlotte-ngs.github.io/GELASM/w12/gain_data.csv}) nehmen wir an, dass die Reste $\mathbf{\epsilon}$ nicht mehr konstant und unkorreliert sind, sondern dass folgende Covarianzmatrix gefunden wurde.
+
+
+```{r GenerateRandCovMat, echo=FALSE, results='hide'}
+set.seed(7643)
+nNrCalf <- 5
+Calf <- 1:nNrCalf
+WWG <- c(4.5, 2.9, 3.9, 3.5, 5.0)/5
+PWG <- c(6.8, 5.0, 6.8, 6.0, 7.5)/5
+BW <- round(25*PWG + rnorm(nNrCalf), digits = 1)
+dfGainData <- data.frame(Calf, BW, WWG=WWG, PWG=PWG)
+
+mRandC <- matrix(round(runif(nNrCalf*nNrCalf)+1, digits = 1), ncol = nNrCalf)
+mRandC[upper.tri(mRandC)] <- 0
+mRandC[lower.tri(mRandC)] <- mRandC[lower.tri(mRandC)] / 20
+mSigma <- round(mRandC %*% t(mRandC), digits = 2)
+#write.csv2(mSigma, file="vignettes/w12/covar_sigma.csv", row.names = FALSE, quote = FALSE)
+```
+
+$$\Sigma = \left[
+  \begin{array}{rrrrr}
+      1.44 & 0.12 & 0.08 & 0.09 & 0.12 \\ 
+      0.12 & 2.26 & 0.12 & 0.10 & 0.09 \\ 
+      0.08 & 0.12 & 3.25 & 0.18 & 0.16 \\ 
+      0.09 & 0.10 & 0.18 & 2.91 & 0.14 \\ 
+      0.12 & 0.09 & 0.16 & 0.14 & 2.27
+  \end{array}
+\right]
+$$
+
+Die Matrix ist verfügbar als CSV-Datei unter: \url{http://charlotte-ngs.github.io/GELASM/w12/covar_sigma.csv} verfügbar. 
+
+### Ihre Aufgabe
+Schätzen sie die Regressionskoeffizienten unter Berücksichtigung der Covarianzmatrix $\Sigma$.
+
+### Hinweise
+Die Funktion `chol()` macht die Cholesky-Faktorisierung in R. Das Resultat von `chol()` ist eine obere rechte Dreiecksmatrix. Dies entspricht der Matrix $\mathbf{C}^T$ in der Vorlesung. Die Inverse einer Matrix lässt sich mit der Funktion `solve()` berechnen.
+

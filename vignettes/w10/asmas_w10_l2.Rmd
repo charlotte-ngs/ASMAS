@@ -64,8 +64,10 @@ Da es sich nur um sechs Loci handelt, können die `a`-Werte mit einer Regression
 1. Einlesen der Daten mit 
 
 ```{r ReadInput}
-dfGenoSelDat <- read.csv2(file = "http://charlotte-ngs.github.io/GELSAM/w10/geno_sel_step1.csv", stringsAsFactors = FALSE)
-str(GenoSelDat)
+dfGenoSelDat <- read.csv2(file = "http://charlotte-ngs.github.io/GELASM/w10/geno_sel_step1.csv", 
+                          stringsAsFactors = FALSE, 
+                          row.names = 1)
+str(dfGenoSelDat)
 ```
 
 2. Lineare Regression mit funktion `lm()` wobei die phänotypischen Werte in Kolonne `bwt_sim` gespeichert sind.
