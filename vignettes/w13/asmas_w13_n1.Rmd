@@ -39,7 +39,6 @@ knitr::kable(dfAbrev)
 Dieses Dokument gibt einerseits eine Zusammenfassung zum Thema LASSO und ist andererseits als Lerntext organisiert. Das heisst, nach jedem Abschnitt wird eine Kontrollfrage gestellt. Kann diese Frage beantwortet werden, können wir im Text weiterfahren, sonst empfehle ich, den der Frage vorangegangenen Abschnitt noch einmal zu lesen. Der Inhalt basiert im Wesentlichen auf Kapitel 6 von 
 @JWHT2013. 
 
-\pagebreak
 
 # Einführung
 Das lineare Modell 
@@ -127,7 +126,7 @@ b. Wie sehen die Alternativen zu Least Squares aus?
 \rule{16cm}{.1pt}
 
 
-## Lasso
+# Lasso
 Es gibt Schätzverfahren, welche mehrere der oben genannten Alternativen zu Least Squares kombinieren. Ein Beispiel dafür ist LASSO. LASSO steht für Least Absolute Shrinkage and Selection Operation und kombiniert "Subset Selection" und Regularisierung. Die Regularisierung wird durch das Hinzufügen eines Terms zu den Rest-Summenquadraten ($RSS$), welche bei Least Squares minimiert werden. In Gleichung (\ref{eq:LsEstimateBeta}) haben wir gesehen, wie $RSS$ verwendet werden zur Berechnung der Least Squares Schätzer
 
 \begin{eqnarray}
@@ -137,8 +136,8 @@ Es gibt Schätzverfahren, welche mehrere der oben genannten Alternativen zu Leas
 \label{eq:LsEstimateBetaExpandRSS}
 \end{eqnarray}
 
-### Regularisierung bei LASSO
-Bei LASSO wird nun zu $RSS$ ein sogenannter Strafterm (penalty term) eingefügt. Dieser Strafterm beträgt $\lambda\sum_{j=1}^p|\beta_j|$. Der Term wird deshalb als Strafterm bezeichnet, weil er mit steigender Summe der Absolutbeträge aller $\beta_j$ immer grösser wird. Diese führt zum gewünschten Effekt der Regularisierung. Das heisst durch das Hinzufügen dieses Strafterms werden die Absolutbeträge und somit die Variabilität der Koeffizientenschätzungen begrenzt, was der eigentliche Sinn und Zweck der Regularisierung ist.
+## Regularisierung bei LASSO
+Bei LASSO wird nun zu $RSS$ ein sogenannter Strafterm (penalty term) hinzugefügt. Dieser Strafterm beträgt $\lambda\sum_{j=1}^p|\beta_j|$. Der Term wird deshalb als Strafterm bezeichnet, weil er mit steigender Summe der Absolutbeträge aller $\beta_j$ immer grösser wird. Diese führt zum gewünschten Effekt der Regularisierung. Das heisst durch das Hinzufügen dieses Strafterms werden die Absolutbeträge und somit die Variabilität der Koeffizientenschätzungen begrenzt, was der eigentliche Sinn und Zweck der Regularisierung ist.
 
 In Formeln ausgedrückt, lauten die geschätzten Regressionskoeffizienten für LASSO, wie folgt:
 
@@ -149,7 +148,7 @@ In Formeln ausgedrückt, lauten die geschätzten Regressionskoeffizienten für L
 \end{eqnarray}
 
 
-### Subset Selection bei LASSO
+## Subset Selection bei LASSO
 Wie schon im vorangegangenen Abschnitt beschrieben, dient der Strafterm $\lambda\sum_{j=1}^p|\beta_j|$ zur Regularisierung der geschätzten Koeffizienten $\beta_j$ im linearen Modell. Der Strafterm spielt auch eine entscheidene Rolle bei der Subset Selection. Dadurch, dass der Strafterm die Absolutbeträge der Koeffizienten $\beta_j$ summiert, werden die Schätzungen von gewissen Koeffizienten explizit auf Null gesetzt. Weshalb dieser Effekt der Subset Selection bei LASSO eintritt kann mit folgender Abbildung (siehe nächste Seite) erklärt werden. 
 
 In dieser Abbildung sind nur zwei erklärende Variablen gezeigt und somit ist $p=2$. Die Koeffizienten zu den erklärenden Variablen werden in der Abbildung mit $b$ und nicht mit $\beta$ bezeichnet. Unter der Annahme, dass wir unendlich viele Daten hätten, wäre der Schätzer der Koeffizienten $b_j$ mit minimalem Fehler am Punkt, welcher in der Abbildung mit $\hat{b}$ bezeichnet ist. Die grünen Ellipsen um diesen Punkt $\hat{b}$ sind die Linien mit konstantem Fehler. Die rote Linie steht für die Grenze, welche durch den Strafterm aus LASSO entsteht. Das heisst geschätzte Koeffizienten können nur links dieser roten Linie liegen. Da wir den geschätzten Koeffizienten $\hat{b}_j$ einerseits minimalen Fehler erreichen wollen und auf der anderen Seite innerhalb der Regularisierungsgrenzen sein müssen, liegen die besten Schätzer für $b_j$ am Schnittpunkt zwischen den grünen Ellipsen und der roten Linie. Durch den Verlauf der roten Linie ist die Wahrscheinlichkeit, dass sich die grünen Ellipsen und die rote Linie auf einer Koordinatenachse schneiden sehr hoch. Schneiden sich die grünen Ellipsen und die rote Linie auf einer Koordinatenachse, dann wurde ein Schätzer für einen Koeffizienten $b_j$ auf Null gesetzt und somit haben wir den gewünschten Effekt der Subset Selection erreicht.
@@ -167,6 +166,79 @@ b. Wie erreichen wir mit LASSO den Effekt der Regularisierung?
 c. Wie werden mit LASSO gewissen erklärende Variablen selektioniert? 
 
 \rule{16cm}{.1pt}
+
+
+# Bestimmung von $\lambda$
+Der Strafterm, welcher in Gleichung (\ref{eq:LsEstimateBetaLASSO}) eingefügt wurde und für die Regularisierung bei LASSO verantwortlich ist, enhält eine Variable $\lambda$. Diese Variable bestimmt das Ausmass der Regularisierung und muss als zusätzlicher Parameter aus den Daten bestimmt werden. Für die Bestimmung von $\lambda$ wird eine sogenannte Kreuzvalidierungsprozedur (cross validation) verwendet. Bei einer Kreuzvalidiuerng werden die Beobachtungen zufällig in ein sogenanntes Trainings-Set und in ein Test-Set unterteilt, wobei das Test-Set meist weniger Beobachtungen enthält als das Trainings-Set. Mit dem Trainings-Set werden dann die Koeffizienten $\beta_j$ geschätzt. Dann werden für vorher bestimmte Werte von $\lambda$ die Beobachtungen im Test-Set vorhergesagt. Der Wert von $\lambda$, welcher die tiefsten Vorhersagefehler liefert, wird als optimaler Schätzwert von $\lambda$ betrachtet.  
+
+
+# Analyse mit LASSO in R
+In diesem Abschnitt wird gezeigt, wie ein Datensatz mit LASSO in R analysiert werden kann. Wir verwenden dazu den `Hitters`- Datensatz aus dem Buch von @JWHT2013. Dieser Datensatz enthält als Zielgrösse das Einkommen von Baseballspielern und zu diesen Spielern noch weitere erklärende Variablen. Der Datensatz ist im R-Package `ISLR` integriert. Für die Analyse werden wir die Funktion `glmnet()` aus dem gleichnamigen R-Package verwenden. Als erstes installieren wir die beiden Packages und ignorieren alle Records, welche fehlende Daten aufweisen.
+
+```{r InstallPackDataPrep}
+if (!require(ISLR)) {
+  install.packages("ISLR")
+  require(ISLR)
+}
+  
+if (!require(glmnet)){
+  install.packages("glmnet")
+  require(glmnet)
+}
+  
+### # records mit fehlenden Daten ignorieren
+data(Hitters)
+Hitters <- na.omit(Hitters)
+dim(Hitters)
+```
+
+Da wir für die Bestimmung von $\lambda$ mit Kreuzvalidierung ein Trainings- und ein Test-Set benötigen, bestimmen wir diese durch den Zufallszahlengenerator und der Funktion `sample()`
+
+```{r TrainTestSet}
+set.seed (1)
+train <- sample (c(TRUE ,FALSE), nrow(Hitters), rep=TRUE)
+test  <- (! train )
+```
+
+Wir verwenden die Funktion `glmnet()` zur Modellierung mit LASSO. Für diese Funktion muss das Modell anders spezifiziert werden als für die Funktion `lm()`. Wir brauchen dazu die Objekte `x` und `y`.
+
+```{r LassoModelPrep}
+x <- model.matrix (Salary ~ ., Hitters)[,-1]
+y <- Hitters$Salary
+```
+
+Die vorgegebenen Werte für $\lambda$ werden in der Variablen `grid` abgelegt. Es handelt sich um $100$ Werte zwischen $10^10$ und $10^{-2}$. 
+
+```{r GridLambda}
+grid <- 10^ seq (10,-2, length =100)
+```
+
+The following statements fits a LASSO model.
+
+```{r LassoModel}
+lasso.mod <- glmnet (x[train ,],y[train],alpha =1, lambda = grid)
+plot(lasso.mod)
+```
+
+Der Plot zeigt, wie sich der Strafterm für verschiedene Werte (durch Farben codiert) verhält. Nun wollen wir den besten Wert für $\lambda$ bestimmen. Dies wird durch Kreuzvalidierung gemacht.
+
+```{r CrossValidation}
+set.seed (1)
+cv.out <- cv.glmnet (x[train ,],y[train],alpha =1)
+bestlam <- cv.out$lambda.min
+```
+
+Der Anteil an Koeffizienten, welcher durch LASSO null gesetzt wird kann mit folgenden Statements überprüft werden.
+
+```{r LassoCoeff}
+out <- glmnet(x, y, alpha = 1, lambda = grid)
+lasso.coef <- predict(out, type = "coefficients", s=bestlam )[1:20,]
+lasso.coef
+```
+
+
+
+
 
 \pagebreak
 
