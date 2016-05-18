@@ -10,13 +10,13 @@ vignette: >
 ---
 
 ## Dokumentenstatus
-```{r DocumentStatus, echo=FALSE, results='asis'}
+```{r DocumentStatus, echo=FALSE, results='asis', eval=FALSE}
 r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
 r6objStat$setProject("ASMAS")
 #r6objStat$setVersion("0.0.901")
 #r6objStat$setStatus("Initialisierung")
-r6objStat$setVersion("0.0.902")
-r6objStat$setStatus("Einführung, Frequentisten und Bayesianer")
+# r6objStat$setVersion("0.0.902")
+# r6objStat$setStatus("Einführung Frequentisten und Bayesianer")
 
 r6objStat$writeStatusToFile()
 r6objStat$knitr_kable()
@@ -58,7 +58,7 @@ Die Unterschiede zwischen Frequentisten und Bayesianern bestehen hauptsächlich 
 Die folgende Tabelle gibt eine Übersicht über die Unterschiede.
 
 ```{r FreqBayesTable, echo=FALSE, results='asis'}
-Was <- c("Wahrscheinlichkeiten", "Modell- und Datenkomponenten", "Parameterschätztechniken")
+Was <- c("Wahrscheinlichkeiten", "Modell- und Datenkomponenten", "Parameterschätzungen")
 Frequentisten <- c("Eigenschaften von Zufallsvariablen, welche bei grossen Stichproben eintreten",
                    "Unterscheidung zwischen Modellparametern und Daten. Parameter sind unbekannt, Daten sind bekannt. Fehlende Daten werden ignoriert",
                    "ML oder REML werden für Parameterschätzung verwendet")
@@ -66,9 +66,12 @@ Bayesianer <-  c("Mass für Informationsgehalt unabhängig von Stichprobengröss
                  "Unterscheidung zwischen unbekannten und bekannten Grössen, unabhängig ob Parameter oder Daten",
                  "MCMC Zufallszahlen zur Approximation der gewünschten a posteriori Verteilungen")
 #knitr::kable
-pander::pandoc.table(data.frame(Was           = Was,
-                        Frequentisten = Frequentisten,
-                        Bayesianer    = Bayesianer))
+#pander::pandoc.table
+xtable::xtable(data.frame(Was           = Was,
+                          Frequentisten = Frequentisten,
+                          Bayesianer    = Bayesianer,
+                          row.names     = NULL),
+               align = c("l","p{3.5cm}","p{5cm}","p{5cm}") )
 ```
 
 
