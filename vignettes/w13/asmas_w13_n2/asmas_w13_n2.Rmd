@@ -25,9 +25,11 @@ r6objStat$knitr_kable()
 
 ## Abkürzungen
 ```{r DocumentAbrev, echo=FALSE, results='asis'}
-dfAbrev <- data.frame(Abk = c("REML","BLUP"),
+dfAbrev <- data.frame(Abk = c("REML","BLUP", "ML", "MCMC"),
                       Bedeutung = c("Restricted oder Residual Maximum Likelihood",
-                                    "Best Linear Unbiased Prediction"))
+                                    "Best Linear Unbiased Prediction",
+                                    "Maximum Likelihood",
+                                    "Markov Chain Monte Carlo"))
 knitr::kable(dfAbrev)
 ```
 
@@ -53,5 +55,20 @@ Die Unterschiede zwischen Frequentisten und Bayesianern bestehen hauptsächlich 
 - deren Unterteilung von Modell- und Datenkomponenten
 - deren Techniken zur Schätzung von Parametern
 
+Die folgende Tabelle gibt eine Übersicht über die Unterschiede.
 
-## Wahrscheinlichkeitsmass
+```{r FreqBayesTable, echo=FALSE, results='asis'}
+Was <- c("Wahrscheinlichkeiten", "Modell- und Datenkomponenten", "Parameterschätztechniken")
+Frequentisten <- c("Eigenschaften von Zufallsvariablen, welche bei grossen Stichproben eintreten",
+                   "Unterscheidung zwischen Modellparametern und Daten. Parameter sind unbekannt, Daten sind bekannt. Fehlende Daten werden ignoriert",
+                   "ML oder REML werden für Parameterschätzung verwendet")
+Bayesianer <-  c("Mass für Informationsgehalt unabhängig von Stichprobengrösse",
+                 "Unterscheidung zwischen unbekannten und bekannten Grössen, unabhängig ob Parameter oder Daten",
+                 "MCMC Zufallszahlen zur Approximation der gewünschten a posteriori Verteilungen")
+#knitr::kable
+pander::pandoc.table(data.frame(Was           = Was,
+                        Frequentisten = Frequentisten,
+                        Bayesianer    = Bayesianer))
+```
+
+
