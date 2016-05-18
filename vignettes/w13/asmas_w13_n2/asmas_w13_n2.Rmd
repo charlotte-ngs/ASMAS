@@ -1,0 +1,57 @@
+---
+title: "Bayes'scher Ansatz"
+author: "Peter von Rohr"
+date: "`r Sys.Date()`"
+output: pdf_document
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Dokumentenstatus
+```{r DocumentStatus, echo=FALSE, results='asis'}
+r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
+r6objStat$setProject("ASMAS")
+#r6objStat$setVersion("0.0.901")
+#r6objStat$setStatus("Initialisierung")
+r6objStat$setVersion("0.0.902")
+r6objStat$setStatus("Einführung, Frequentisten und Bayesianer")
+
+r6objStat$writeStatusToFile()
+r6objStat$knitr_kable()
+```
+
+
+## Abkürzungen
+```{r DocumentAbrev, echo=FALSE, results='asis'}
+dfAbrev <- data.frame(Abk = c("REML","BLUP"),
+                      Bedeutung = c("Restricted oder Residual Maximum Likelihood",
+                                    "Best Linear Unbiased Prediction"))
+knitr::kable(dfAbrev)
+```
+
+
+\tableofcontents
+
+
+# Erklärung
+Dieses Dokument enthält eine Einführung in Bayes'sche Statistik im Hinblick auf deren Verwendung in der genomischen Selektion. Der präsentierte Inhalt ist als Lerntext organisiert. Das heisst nach jedem Abschnitt wird eine Kontrollfrage gestellt. Kann der/die LeserIn die Frage beantworten, kann der nachfolgende Abschnitt in Angriff genommen werden. Andernfalls empfielt es sich den vorangegangenen Abschnitt noch einmal zu repetieren. 
+
+
+# Einführung
+In der Statistik gibt es zwei verschiedene Lehrmeinungen. Es sind dies 
+
+1. die __Frequentisten__ und
+2. die __Bayesianer__.
+
+Alle bisher \footnote{Hier ist nicht nur diese Vorlesung sondern auch die Züchtungslehre und die angewandet Zuchtwertschätzung gemeint} vorgestellten statistischen Konzepte, so zum Beispiel `Least Squares`, `Maximum Likelihood`, `REML` und `BLUP` stammen aus dem Lager der Frequentisten.
+
+Die Unterschiede zwischen Frequentisten und Bayesianern bestehen hauptsächlich in 
+
+- deren Verständnis von Wahrscheinlichkeiten
+- deren Unterteilung von Modell- und Datenkomponenten
+- deren Techniken zur Schätzung von Parametern
+
+
+## Wahrscheinlichkeitsmass
