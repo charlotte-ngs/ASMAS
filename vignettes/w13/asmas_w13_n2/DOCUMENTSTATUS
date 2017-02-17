@@ -1,3 +1,4 @@
-version;author;date;status;project
-0.0.901;peter;2016-05-09;Initialisierung;ASMAS
-0.0.902;peter;2016-05-09;Einführung, Frequentisten und Bayesianer;ASMAS
+version	author	date	status	project
+0.0.901	peter	2016-05-09	Initialisierung	ASMAS
+0.0.902	peter	2016-05-21	Einführung, Frequentisten und Bayesianer	ASMAS
+0.0.903	peter	2016-05-22	Gibbs Sampler	ASMAS

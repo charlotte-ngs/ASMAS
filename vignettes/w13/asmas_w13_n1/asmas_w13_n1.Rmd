@@ -15,8 +15,11 @@ bibliography: asmas_w13_n1.bibtex
 ```{r DocumentStatus, echo=FALSE, results='asis'}
 r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
 r6objStat$setProject("ASMAS")
-r6objStat$setVersion("0.0.901")
-r6objStat$setStatus("Initialisierung")
+# r6objStat$setVersion("0.0.901")
+# r6objStat$setStatus("Initialisierung")
+
+r6objStat$setVersion("0.0.902")
+r6objStat$setStatus("Korrektur, Regularisierung anstatt Regularisation")
 
 r6objStat$writeStatusToFile()
 r6objStat$knitr_kable()
@@ -112,7 +115,7 @@ Das lineare Modell (\ref{eq:StandardLinearModel}) erweist sich in der Praxis als
 Da wir die positiven Eigenschaften des linearen Modells gerne beibehalten möchten, wurde nach Alternativen zu Least Squres gesucht. Diese möglichen Alternativen können in drei Kategorien eingeteilt werden.
 
 1. __Subset Selektion__: Aus den $p$ erklärenden Variablen wird ein Subset von "relevanten" Variablen ausgewählt. Alle anderen Variablen werden ignoriert. Die relevanten Variablen werden oft aufgrund der Signifikanz des geschätzten Regressionskoeffizienten $\beta_j$ identifiziert.
-2. Regularisierung.(Shrinkage): Alle $p$ erklärenden Variablen werden verwendet. Die geschätzten Regressionskoeffizienten werden durch bestimmte Techniken gegen den Nullpunkt "gedrückt". Dieser Prozess wird als Schrumpfung (Shrinkage) bezeichnet. Die so erzeugte Reduktion der Variabilität der Schätzwerte wird als Regularisation bezeichnet.
+2. Regularisierung.(Shrinkage): Alle $p$ erklärenden Variablen werden verwendet. Die geschätzten Regressionskoeffizienten werden durch bestimmte Techniken gegen den Nullpunkt "gedrückt". Dieser Prozess wird als Schrumpfung (Shrinkage) bezeichnet. Die so erzeugte Reduktion der Variabilität der Schätzwerte wird als Regularisierung bezeichnet.
 3. __Dimensionsreduktion__: Die $p$ erklärenden Variablen werden zu $m$ Linearkombinationen reduziert. Diese Reduktion kann mit Techniken, wie Principal Components Analysis oder Faktoranalyse gemacht werden.
 
 
@@ -265,7 +268,7 @@ __Antwort 3__:
 
 a. Least Squares kann nur verwendet werden, wenn $n > p$ gilt, d.h. die Anzahl der Beobachtungen grösser ist als die Anzahl zu schätzender Parameter. Da es aber immer häufiger Anwendungen gibt, bei denen das nicht der Fall ist, brauchen wir Alternativen zu Least Squares. 
 
-b. Es wurden drei Alternativen vorgestellt: (1) Subset-Selection, (2) Regularisation und (3) Dimensionsreduktion
+b. Es wurden drei Alternativen vorgestellt: (1) Subset-Selection, (2) Regularisierung und (3) Dimensionsreduktion
 
 
 __Antwort 4__:
