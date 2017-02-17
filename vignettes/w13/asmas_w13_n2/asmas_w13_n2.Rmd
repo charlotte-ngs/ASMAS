@@ -17,14 +17,22 @@ knitr::opts_chunk$set(echo = FALSE, results = 'asis')
 
 ```{r DocumentStatus, eval=FALSE}
 ## Dokumentenstatus
+<<<<<<< HEAD
+=======
+```{r DocumentStatus, echo=FALSE, results='asis', eval=FALSE}
+>>>>>>> f29d84432b5b1ef4b8137e53ef39038a61382d24
 r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
 r6objStat$setProject("ASMAS")
 #r6objStat$setVersion("0.0.901")
 #r6objStat$setStatus("Initialisierung")
 # r6objStat$setVersion("0.0.902")
+<<<<<<< HEAD
 # r6objStat$setStatus("Einführung, Frequentisten und Bayesianer")
 r6objStat$setVersion("0.0.903")
 r6objStat$setStatus("Gibbs Sampler")
+=======
+# r6objStat$setStatus("Einführung Frequentisten und Bayesianer")
+>>>>>>> f29d84432b5b1ef4b8137e53ef39038a61382d24
 
 r6objStat$writeStatusToFile()
 r6objStat$knitr_kable()
@@ -67,13 +75,18 @@ Die Unterschiede zwischen Frequentisten und Bayesianern bestehen hauptsächlich 
 Die folgende Tabelle gibt eine Übersicht über die Unterschiede.
 
 ```{r FreqBayesTable, echo=FALSE, results='asis'}
+<<<<<<< HEAD
 Was <- c("Wahrscheinlichkeiten", "Modell- und Datenkomponenten", "Schätztungen von Parametern")
+=======
+Was <- c("Wahrscheinlichkeiten", "Modell- und Datenkomponenten", "Parameterschätzungen")
+>>>>>>> f29d84432b5b1ef4b8137e53ef39038a61382d24
 Frequentisten <- c("Eigenschaften von Zufallsvariablen, welche bei grossen Stichproben eintreten",
                    "Unterscheidung zwischen Modellparametern und Daten. Parameter sind unbekannt, Daten sind bekannt. Fehlende Daten werden ignoriert",
                    "ML oder REML werden für Parameterschätzung verwendet")
 Bayesianer <-  c("Mass für Informationsgehalt unabhängig von Stichprobengrösse",
                  "Unterscheidung zwischen unbekannten und bekannten Grössen, unabhängig ob Parameter oder Daten. Fehlende Daten können simuliert werden",
                  "MCMC Zufallszahlen zur Approximation der gewünschten a posteriori Verteilungen")
+<<<<<<< HEAD
 sTabCaptOut <- capture.output(print(xtable::xtable(data.frame(Was           = Was,
                                                               Frequentisten = Frequentisten,
                                                               Bayesianer    = Bayesianer,
@@ -292,6 +305,15 @@ for (iter in 1:niter) {
 cat(sprintf("Achsenabschnitt = %6.3f \n", meanBeta[1]/iter))
 cat(sprintf("Steigung = %6.3f \n", meanBeta[2]/iter))
 
+=======
+#knitr::kable
+#pander::pandoc.table
+xtable::xtable(data.frame(Was           = Was,
+                          Frequentisten = Frequentisten,
+                          Bayesianer    = Bayesianer,
+                          row.names     = NULL),
+               align = c("l","p{3.5cm}","p{5cm}","p{5cm}") )
+>>>>>>> f29d84432b5b1ef4b8137e53ef39038a61382d24
 ```
 
 
